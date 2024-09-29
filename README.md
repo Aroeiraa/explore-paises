@@ -3,6 +3,7 @@ Ele permite que os usuários visualizem detalhes de diversos países, como bande
 
 # Funcionalidades principais
 Exibir uma lista de países com uma interface de grade.
+
 Visualizar detalhes específicos de cada país, como bandeira e informações adicionais, ao clicar no cartão de um país.
 
 ## Uso
