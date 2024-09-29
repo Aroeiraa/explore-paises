@@ -3,7 +3,7 @@ Ele permite que os usuários visualizem detalhes de diversos países, como bande
 
 # Funcionalidades principais
 Exibir uma lista de países com uma interface de grade.
-
+A listgem tem scroll inifinito ou paginada ( o usuário pode escolher apertando em um botão)
 Visualizar detalhes específicos de cada país, como bandeira e informações adicionais, ao clicar no cartão de um país.
 
 ## Uso
