@@ -1,0 +1,205 @@
+/* Reset e Estilos Globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Manrope', sans-serif;
+  color: rgb(0, 0, 0);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Estilos do Corpo do Documento */
+body {
+  background-color: #277a9b;
+  color: #1f1b1b;
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 20px;
+  transition: background-color 0.5s ease-in-out;
+}
+
+/* Estilos para Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Cabeçalho e Busca */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* Estilos para Entradas de Texto e Seletores */
+input[type="text"], select {
+  padding: 10px;
+  border: 1px solid #101d33;
+  border-radius: 30px;
+  width: 200px;
+  margin-right: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #8ca2b7;
+  color: #000205;
+}
+
+/* Estilos para o Contêiner de Filtro */
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Estilos para a Grade de Países */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Estilos para o Cartão do País */
+.country-card {
+  background-color: #1b557be9;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 14px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.country-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 1px 16px 40px rgba(1, 1, 1, 0.3);
+}
+
+.country-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.country-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #101d33;
+}
+
+/* Detalhes do País */
+.country-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  background-color: #92afe03c;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 80%;
+  height: 500px;
+  margin: auto;
+  border-radius: 60px;
+}
+
+.details-container {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+}
+
+.flag-container {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flag-container img {
+  width: 100%;
+  height: auto;
+}
+
+.info-container {
+  flex: 2;
+  padding-left: 80px;
+}
+
+.back-link {
+ position: absolute;
+ top: 10px;
+ left: 10px;
+ display: inline-block;
+ padding: 10px 20px;
+ background-color: #285364;
+ border-radius: 25px;
+ box-shadow: #000205;
+ margin-bottom: 20px;
+ color: #e4e4e4;
+text-decoration: none;
+text-align: left;
+}
+
+/* Media Queries para ajustes responsivos */
+@media (max-width: 1024px) {
+  .country-details {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .info-container {
+    padding-left: 0;
+    padding-top: 20px;
+  }
+
+  .flag-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .country-details {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .country-details {
+    flex-direction: column; /* Alteração para organizar verticalmente */
+    align-items: center;
+    width: 100%;
+    height: auto; /* Ajusta a altura conforme necessário */
+  }
+  
+  .flag-container {
+    width: 100%; /* Centraliza a bandeira */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Adiciona espaço entre a bandeira e as informações */
+  }
+  
+  .flag-container img {
+    width: 80%; /* Reduz o tamanho da bandeira para caber melhor */
+  }
+
+  .info-container {
+    padding-left: 0;
+    width: 100%; /* Garante que as informações ocupem toda a largura */
+    text-align: center; /* Centraliza as informações */
+  }
+
+  .country-card h3 {
+    font-size: 16px; /* Reduz o tamanho da fonte do título em telas pequenas */
+  }
+}
+
