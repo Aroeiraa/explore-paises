@@ -7,8 +7,6 @@ A listgem tem scroll inifinito ou paginada ( o usuário pode escolher apertando 
 Visualizar detalhes específicos de cada país, como bandeira e informações adicionais, ao clicar no cartão de um país.
 
 ## Uso
-Como rodar o projeto:
-- `npm start`
 - quando o projeto estiver rodando, vai aparecer as bandeiras com os nomes dos paises em ordem alfabetica, acima vai haver um campo de busca que o usuário vai procurar pelo nome e os filtros de continente, sub regiões e o filtreo que vai ordenar por área, população e por nome.
 - o úsuario pode procurar pelo nome ou escolher entre as opçõess de filtros que pais ou paises quer ter mais detalhes.
 
