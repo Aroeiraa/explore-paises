@@ -203,3 +203,22 @@ text-align: left;
   }
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-number {
+  margin: 0 5px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #ececec;
+  border: none;
+  border-radius: 5px;
+}
+
+.page-number.active {
+  background-color: #277a9b;
+  color: #fff;
+}

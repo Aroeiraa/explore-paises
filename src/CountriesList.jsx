@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -12,10 +12,9 @@ const CountriesList = () => {
   const [selectedSorting, setSelectedSorting] = useState('name');
   const [subregions, setSubregions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isPaginated, setIsPaginated] = useState(false); // Define se é scroll infinito ou paginado
-  const countriesPerPage = 20; // Quantidade de países por página
+  const [isPaginated, setIsPaginated] = useState(false);
+  const countriesPerPage = 20;
 
-  // Busca os países ao montar o componente
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -23,7 +22,7 @@ const CountriesList = () => {
         const sortedCountries = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
         setAllCountries(sortedCountries);
         setSubregions([...new Set(sortedCountries.map(c => c.subregion).filter(Boolean))]);
-        setDisplayedCountries(sortedCountries.slice(0, countriesPerPage)); // Exibe a primeira "página"
+        setDisplayedCountries(sortedCountries.slice(0, countriesPerPage));
       } catch (error) {
         console.error("Error fetching countries list", error);
       }
@@ -32,32 +31,28 @@ const CountriesList = () => {
     fetchCountries();
   }, []);
 
-  // Funções de manipulação dos filtros
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
   const handleRegionChange = (e) => {
     setSelectedRegion(e.target.value);
-    setCurrentPage(1); // Reinicia a página ao mudar o filtro
+    setCurrentPage(1);
   };
   const handleSubregionChange = (e) => {
     setSelectedSubregion(e.target.value);
-    setCurrentPage(1); // Reinicia a página ao mudar o filtro
+    setCurrentPage(1);
   };
   const handlePopulationChange = (e) => {
     setSelectedPopulation(e.target.value);
-    setCurrentPage(1); // Reinicia a página ao mudar o filtro
+    setCurrentPage(1);
   };
   const handleSortingChange = (e) => {
     setSelectedSorting(e.target.value);
-    setCurrentPage(1); // Reinicia a página ao mudar a ordenação
+    setCurrentPage(1);
   };
-
-  // Função para alternar entre scroll infinito e paginação
   const togglePagination = () => {
     setIsPaginated(prev => !prev);
-    setCurrentPage(1); // Reinicia a contagem de páginas
+    setCurrentPage(1);
   };
 
-  // Filtro de população
   const filterByPopulation = (population) => {
     switch (selectedPopulation) {
       case '<1M': return population < 1000000;
@@ -69,7 +64,6 @@ const CountriesList = () => {
     }
   };
 
-  // Ordenação de países
   const sortCountries = (countries) => {
     return countries.sort((a, b) => {
       switch (selectedSorting) {
@@ -80,7 +74,6 @@ const CountriesList = () => {
     });
   };
 
-  // Aplica os filtros e retorna a lista de países filtrada
   const getFilteredCountries = () => {
     return sortCountries(
       allCountries.filter(c => {
@@ -93,7 +86,6 @@ const CountriesList = () => {
     );
   };
 
-  // Atualiza os países exibidos quando qualquer filtro muda
   useEffect(() => {
     const filteredCountries = getFilteredCountries();
     if (isPaginated) {
@@ -103,12 +95,10 @@ const CountriesList = () => {
     }
   }, [searchTerm, selectedRegion, selectedSubregion, selectedPopulation, selectedSorting, currentPage, isPaginated]);
 
-  // Carrega mais países no scroll
   const loadMoreCountries = () => {
     setCurrentPage(prevPage => prevPage + 1);
   };
 
-  // Detecta scroll até o final da página
   useEffect(() => {
     if (!isPaginated) {
       const handleScroll = () => {
@@ -117,11 +107,18 @@ const CountriesList = () => {
         }
       };
       window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll); // Limpa o evento ao desmontar
+      return () => window.removeEventListener('scroll', handleScroll);
     }
   }, [isPaginated]);
 
-  // Renderização
+  const pageNumbers = [];
+  const totalCountries = getFilteredCountries().length;
+  const totalPages = Math.ceil(totalCountries / countriesPerPage);
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <div>
       <div className="search-filter-container">
@@ -162,7 +159,7 @@ const CountriesList = () => {
           <option value="area">Sort by Area</option>
         </select>
 
-        <button n onClick={togglePagination} style={{ marginLeft: '10px' }}>
+        <button onClick={togglePagination} style={{ marginLeft: '10px' }}>
           {isPaginated ? 'Switch to Infinite Scroll' : 'Switch to Pagination'}
         </button>
       </div>
@@ -178,17 +175,26 @@ const CountriesList = () => {
         ))}
       </div>
 
-      {/* Paginação manual */}
       {isPaginated && (
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <button onClick={() => setCurrentPage(prev => prev + 1)}>Load More</button>
+          {pageNumbers.map(number => (
+            <button
+              key={number}
+              onClick={() => setCurrentPage(number)}
+              style={{
+                ...paginationButtonStyle,
+                backgroundColor: currentPage === number ? '#007BFF' : '#ddd'
+              }}
+            >
+              {number}
+            </button>
+          ))}
         </div>
       )}
     </div>
   );
 };
 
-// Estilo para inputs e selects
 const inputStyle = {
   padding: '10px',
   width: '18%',
@@ -196,24 +202,14 @@ const inputStyle = {
   borderRadius: '15px',
 };
 
-const buttonStyle = {
+const paginationButtonStyle = {
   padding: '10px 20px',
-  borderRadius: '25px',
-  backgroundColor: '#4CAF50',
-  color: 'white',
-  border: 'none',
+  borderRadius: '5px',
   cursor: 'pointer',
-  transition: 'background-color 0.3s ease',}
-
-  const paginationButtonStyle = {
-    padding: '10px 20px',
-    backgroundColor: '#007BFF',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'background-color 0.3s ease',
-  };
+  fontSize: '16px',
+  margin: '0 5px',
+  border: 'none',
+  transition: 'background-color 0.3s ease',
+};
 
 export default CountriesList;
